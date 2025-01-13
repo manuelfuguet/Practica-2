@@ -26,6 +26,30 @@ en un formato fácil de analizar (p.e. de HTML a XML)
 
 
 
+# Cargar librerías
+library(httr)
+library(XML)
+
+# URL de la página web que quieres descargar
+url <- "https://en.wikipedia.org/wiki/Static_web_page"
+
+# Descargar la página web
+respuesta <- GET(url)
+
+# Verificar si la solicitud fue exitosa
+if (status_code(respuesta) == 200) {
+  # Extraer el contenido en formato texto
+  contenido_html <- content(respuesta, as = "text")
+  
+  # Convertir el contenido HTML a XML
+  contenido_xml <- htmlParse(contenido_html)
+  
+  # Mostrar estructura del XML
+  print(contenido_xml)
+} else {
+  cat("Error: No se pudo descargar la página web. Código de estado:", status_code(respuesta), "\n")
+}
+
 
 
 
