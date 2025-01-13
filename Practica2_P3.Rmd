@@ -37,11 +37,9 @@ lista	en	un	vector	con	la	función	unlist().
     enlaces[nulos_enlaces] <- NA
     textos_enlace[nulos_textos] <- NA
     
-#Mostrar los enlaces y sus textos
-    for (i in seq_along(enlaces)) {
-        cat("Enlace:", enlaces[i], "\n")
-        cat("Texto del Enlace:", textos_enlace[i], "\n")
-    }
-} else {
-    cat("Error: No se pudo descargar la página web. Código de estado:", status_code(respuesta), "\n")
+# Mostrar los enlaces y sus textos
+for (i in seq_along(enlaces)) {
+    cat("Enlace:", as.character(enlaces[i]), "\n")
+    cat("Texto del Enlace:", as.character(textos_enlace[i]), "\n")
 }
+
