@@ -9,6 +9,44 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Datos Elegantes + Análisis de Datos con Web Scrapping 
+
+### Pregunta 1
+Queremos programar un programa de tipo web scrapping con el que podamos obtener
+una página web, mediante su URL, y poder analizar su contenido HTML con tal de extraer
+datos e información específica.
+Nuestro programa ha de ser capaz de cumplir con los siguientes pasos:
+
+1. Descargar la página web de la URL indicada, y almacenarlo en un formato de R
+apto para ser tratado.
+El primer paso para realizar tareas de crawling y scraping es poder descargar los
+datos de la web. Para esto usaremos la capacidad de R y de sus librerías (httr y
+XML) para descargar webs y almacenarlas en variables que podamos convertir
+en un formato fácil de analizar (p.e. de HTML a XML)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
