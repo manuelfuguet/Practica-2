@@ -1,0 +1,21 @@
+---
+title: "Practica2_P2"
+output: html_document
+---
+
+2. Analizar el contenido de la web, buscando el título de la página (que en HTML 
+se etiqueta como “title”). 
+En las cabeceras web encontramos información como el título, los ficheros de 
+estilo visual, y meta-información como el nombre del autor de la página, una 
+descripción de esta, el tipo de codificación de esta, o palabras clave que indican 
+qué tipo de información contiene la página. Una vez descargada la página, y 
+convertida a un formato analizable (como XML), buscaremos los elementos de 
+tipo “title”. P.e. “<title>Titulo de Página</title>”. 
+Pistas: 
+§ Ahora podemos usar las funciones xpathSApply() para buscar los valores 
+de la página que deseemos. 
+
+
+
+titulo <- xpathSApply(contenido_xml, "//title", xmlValue)
+cat("El título de la página es:", titulo, "\n")
