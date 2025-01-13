@@ -1,0 +1,47 @@
+---
+title: "Practica2_P3"
+output: html_document
+---
+
+3. Analizar el contenido de la web, buscando todos los enlaces (que en HTML se 
+etiquetan como “a”), buscando el texto del enlace, así como la URL. 
+Vamos a extraer, usando las funciones de búsqueda XML, todos los enlaces que 
+salen de esta página con tal de listarlos y poder descargarlas más tarde. Sabemos 
+que estos son elementos de tipo “<a>”, que tienen el atributo “href” para indicar 
+la URL del enlace. P.e. “<a href = ‘enlace’>Texto del Enlace</a>”. Del enlace 
+nos quedaremos con la URL de destino y con el valor del enlace (texto del 
+enlace). 
+Pistas:	
+§ Otra	vez,	usando	xpathSApply()	podemos	buscar	los	enlaces,	en	los	que	
+nos	interesa	el	texto	(valor	del	enlace)	y	la	URL	a	la	que	apunta	(atributo	
+“href”).	
+§ La	función	xpathSApply()	actua	como	sapply(),	simplificando	los	
+resultados.	Si	el	resultado	es	un	vector,	retornará	un	vector,	pero	si	el	
+resultado	contiene	valores	“NULL”,	en	vez	de	crear	un	vector	creará	una	
+lista,	para	que	no	se	pierdan	los	valores	NULL	(en	un	vector	los	NULL	
+desaparecen).	Comprobad	el	retorno	de	xpathSApply,	y	si	hay	NULLs		
+tratadlos	(p.e.	con	la	función	is.null()	para	encontrarlos:		
+“valores_nulos <- sapply(lista, is.null)”,	y	asignarles	un	valor	
+por	defecto	como	NA:	“lista[valores_nulos] <- NA”	y	convertid	la	
+lista	en	un	vector	con	la	función	unlist().
+
+
+# Buscar y extraer todos los enlaces
+    enlaces <- xpathSApply(contenido_xml, "//a", xmlGetAttr, "href")
+    textos_enlace <- xpathSApply(contenido_xml, "//a", xmlValue)
+    
+#Verificar si hay enlaces NULL y tratarlos
+    nulos_enlaces <- sapply(enlaces, is.null)
+    nulos_textos <- sapply(textos_enlace, is.null)
+    
+    enlaces[nulos_enlaces] <- NA
+    textos_enlace[nulos_textos] <- NA
+    
+#Mostrar los enlaces y sus textos
+    for (i in seq_along(enlaces)) {
+        cat("Enlace:", enlaces[i], "\n")
+        cat("Texto del Enlace:", textos_enlace[i], "\n")
+    }
+} else {
+    cat("Error: No se pudo descargar la página web. Código de estado:", status_code(respuesta), "\n")
+}

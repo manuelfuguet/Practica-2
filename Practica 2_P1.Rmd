@@ -47,9 +47,8 @@ if (status_code(respuesta) == 200) {
   # Mostrar estructura del XML
   print(contenido_xml)
 } else {
-  cat("Error: No se pudo descargar la página web. Código de estado:", status_code(respuesta), "\n")
+  cat("Error: No se pudo descargar la página web. Código de estado:", status_code(respuesta),"\n")
 }
-
 
 
 
