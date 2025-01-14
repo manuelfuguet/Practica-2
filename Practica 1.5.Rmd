@@ -3,3 +3,5 @@ title: "Practica 1.5"
 output: html_document
 ---
 
+5. Para cada enlace, seguirlo e indicar si está activo (podemos usar el código de
+status HTTP al hacer una petición a esa URL).
