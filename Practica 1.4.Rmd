@@ -3,3 +3,12 @@ title: "Practica1.4"
 output: html_document
 ---
 
+Generar una tabla con cada enlace encontrado, indicando el texto que 
+acompaña el enlace, y el número de veces que aparece un enlace con ese 
+mismo objetivo. 
+En este paso nos interesa reunir los datos obtenidos en el anterior paso. 
+Tendremos que comprobar, para cada enlace, cuantas veces aparece. 
+Pista: 
+§ Usando los enlaces encontrados, y gracias a la función table(), podemos 
+hacer recuentos de elementos en vectores, matrices y data.frames. 
+
