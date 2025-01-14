@@ -5,3 +5,52 @@ output: html_document
 
 5. Para cada enlace, seguirlo e indicar si está activo (podemos usar el código de
 status HTTP al hacer una petición a esa URL).
+
+
+# Procesar cada enlace del data.frame original 'data'
+data_enlaces$estado <- sapply(data_enlaces$Link, function(link) {
+  # Manejo de enlaces (relativos, absolutos, subdominios e internos)
+  if (is.na(link)) {
+    full_url <- NA
+  } else if (grepl("^http", link)) {
+    full_url <- link  # URLs absolutas
+  } else if (grepl("^//", link)) {
+    full_url <- paste0("https:", link)  # Subdominios
+  } else if (grepl("^#", link)) {
+    full_url <- paste0(base_url, link)  # URLs internas con tags
+  } else {
+    full_url <- paste0(base_url, link)  # URLs relativas
+  }
+  
+  # Intentar obtener el código de estado usando HEAD
+  tryCatch({
+    if (!is.na(full_url)) {
+      response <- HEAD(full_url)
+      estado <- response$estado
+    } else {
+      estado <- NA
+    }
+  }, error = function(e) {
+    estado <- NA  # Asignar NA en caso de error
+  })
+  
+  # Pausa entre solicitudes para evitar ser "baneados"
+  Sys.sleep(1)
+  
+  # Retornar el código de estado
+  return(estado)
+})
+
+# Resumir los datos en el data.frame final 'final_data'
+library(dplyr)
+
+final_data <- data %>%
+  group_by(Link) %>%
+  summarize(
+    textos_enlaces = first(textos_enlaces),
+    Frecuencia = n(),
+    estado = first(estado)
+  )
+
+# Mostrar el resumen final
+print(final_data)
