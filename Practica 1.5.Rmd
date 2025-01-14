@@ -46,10 +46,10 @@ data_enlaces$estado <- sapply(data_enlaces$link, function(link) {
 # Resumir los datos en el data.frame final 'final_data'
 library(dplyr)
 
-final_data <- data %>%
+final_data <- data_enlaces %>%
   group_by(link) %>%
   summarize(
-    textos_enlaces = first(textos_enlaces),
+    textos_enlace = first(textos_enlace),
     Frecuencia = n(),
     estado = first(estado)
   )
