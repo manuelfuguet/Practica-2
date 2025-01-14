@@ -6,9 +6,11 @@ output: html_document
 5. Para cada enlace, seguirlo e indicar si está activo (podemos usar el código de
 status HTTP al hacer una petición a esa URL).
 
+# Base URL del dominio
+base_url <- "https://www.mediawiki.org"
 
 # Procesar cada enlace del data.frame original 'data'
-data_enlaces$estado <- sapply(data_enlaces$Link, function(link) {
+data_enlaces$estado <- sapply(data_enlaces$link, function(link) {
   # Manejo de enlaces (relativos, absolutos, subdominios e internos)
   if (is.na(link)) {
     full_url <- NA
@@ -45,7 +47,7 @@ data_enlaces$estado <- sapply(data_enlaces$Link, function(link) {
 library(dplyr)
 
 final_data <- data %>%
-  group_by(Link) %>%
+  group_by(link) %>%
   summarize(
     textos_enlaces = first(textos_enlaces),
     Frecuencia = n(),
