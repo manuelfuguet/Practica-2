@@ -12,3 +12,17 @@ Pista:
 § Usando los enlaces encontrados, y gracias a la función table(), podemos 
 hacer recuentos de elementos en vectores, matrices y data.frames. 
 
+
+
+# Crear un dataframe con los enlaces y sus textos
+data_enlaces <- data.frame(link_text = unlist(texto_enlaces), link_url = unlist(enlaces))
+
+# Usar la función table() para contar la frecuencia de los enlaces
+frecuencia_enlaces <- table(data_enlaces$link_text, data_enlaces$link_url)
+
+# Convertir la tabla de frecuencias a un dataframe para visualizar mejor
+tabla_frecuencias <- as.data.frame(frecuencia_enlaces)
+
+# Mostrar la tabla de frecuencias
+print(tabla_frecuencias)
+
