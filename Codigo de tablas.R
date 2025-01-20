@@ -94,11 +94,11 @@ barplot(hist_data,
         main = "Frecuencia de Enlaces por Tipo (Gráficos Base)", 
         xlab = "Tipo de URL", 
         ylab = "Frecuencia", 
-        col = c("skyblue", "orange"))
+        col = c("black", "blue"))
 
 # Usando ggplot2
 gg_hist <- ggplot(data_enlaces, aes(x = url_tipo)) +
-  geom_bar(fill = c("skyblue", "orange")) +
+  geom_bar(fill = c("black", "blue")) +
   theme_minimal() +
   labs(
     title = "Frecuencia de Enlaces por Tipo",
@@ -118,12 +118,12 @@ barplot(dominio_data,
         main = "Enlaces Internos vs Externos (Gráficos Base)", 
         xlab = "Dominio", 
         ylab = "Cantidad de Enlaces", 
-        col = c("green", "red"))
+        col = c("black", "blue"))
 
 # Usando ggplot2
 gg_dominio <- ggplot(data_enlaces, aes(x = dominio, fill = dominio)) +
   geom_bar() +
-  scale_fill_manual(values = c("green", "red")) +
+  scale_fill_manual(values = c("black", "blue")) +
   theme_minimal() +
   labs(
     title = "Enlaces Internos vs Externos",
