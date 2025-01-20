@@ -9,11 +9,11 @@ status HTTP al hacer una petición a esa URL).
 # Base URL del dominio
 base_url <- "https://www.mediawiki.org"
 
-# Procesar cada enlace del data.frame original 'data'
+# Procesar cada enlace del data.frame original 'data_enlaces'
 data_enlaces$estado <- sapply(data_enlaces$link, function(link) {
   # Manejo de enlaces (relativos, absolutos, subdominios e internos)
   if (is.na(link)) {
-    full_url <- NA
+    return(NA)
   } else if (grepl("^http", link)) {
     full_url <- link  # URLs absolutas
   } else if (grepl("^//", link)) {
@@ -26,33 +26,20 @@ data_enlaces$estado <- sapply(data_enlaces$link, function(link) {
   
   # Intentar obtener el código de estado usando HEAD
   tryCatch({
-    if (!is.na(full_url)) {
-      response <- HEAD(full_url)
-      estado <- response$estado
-    } else {
-      estado <- NA
-    }
+    response <- HEAD(full_url)
+    status_code(response)
   }, error = function(e) {
-    estado <- NA  # Asignar NA en caso de error
+    NA  # Asignar NA en caso de error
   })
-  
-  # Pausa entre solicitudes para evitar ser "baneados"
-  # Sys.sleep(1)
-  
-  # Retornar el código de estado
-  return(estado)
 })
 
 # Resumir los datos en el data.frame final 'final_data'
-library(dplyr)
-
 final_data <- data_enlaces %>%
   group_by(link) %>%
   summarize(
-    textos_enlace = first(textos_enlace),
+    texto_enlace = first(text),
     Frecuencia = n(),
     estado = first(estado)
   )
 
-# Mostrar el resumen final
 print(final_data)
