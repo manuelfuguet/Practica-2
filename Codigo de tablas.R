@@ -1,17 +1,13 @@
-# Cargar librerías
 library(httr)
 library(XML)
 library(dplyr)
 
-# URL de la página web que quieres descargar
 url <- "https://www.mediawiki.org/wiki/MediaWiki"
 
 # Descargar la página web
 respuesta <- GET(url)
 
-# Verificar si la solicitud fue exitosa
 if (status_code(respuesta) == 200) {
-  # Extraer el contenido en formato texto
   contenido_html <- content(respuesta, as = "text")
   
   # Convertir el contenido HTML a XML
@@ -77,10 +73,8 @@ final_data <- data_enlaces %>%
     estado = first(estado)
   )
 
-# Mostrar el resumen final
 print(final_data)
 
-# Cargar librerías necesarias
 library(ggplot2)
 library(gridExtra)
 
