@@ -80,3 +80,81 @@ final_data <- data_enlaces %>%
 # Mostrar el resumen final
 print(final_data)
 
+# Cargar librerías necesarias
+library(ggplot2)
+library(gridExtra)
+
+# Clasificar URLs absolutas y relativas
+data_enlaces$url_tipo <- ifelse(grepl("^http", data_enlaces$link), "Absoluta", "Relativa")
+
+# 1. Histograma: Frecuencia de aparición de enlaces separados por tipo
+# Usando gráficos base
+hist_data <- table(data_enlaces$url_tipo)
+barplot(hist_data, 
+        main = "Frecuencia de Enlaces por Tipo (Gráficos Base)", 
+        xlab = "Tipo de URL", 
+        ylab = "Frecuencia", 
+        col = c("skyblue", "orange"))
+
+# Usando ggplot2
+gg_hist <- ggplot(data_enlaces, aes(x = url_tipo)) +
+  geom_bar(fill = c("skyblue", "orange")) +
+  theme_minimal() +
+  labs(
+    title = "Frecuencia de Enlaces por Tipo",
+    x = "Tipo de URL",
+    y = "Frecuencia"
+  )
+
+# 2. Gráfico de barras: Suma de enlaces a dominios externos vs internos
+data_enlaces$dominio <- ifelse(
+  grepl("^http", data_enlaces$link) & grepl("mediawiki\\.org", data_enlaces$link),
+  "Interno", "Externo"
+)
+dominio_data <- table(data_enlaces$dominio)
+
+# Usando gráficos base
+barplot(dominio_data, 
+        main = "Enlaces Internos vs Externos (Gráficos Base)", 
+        xlab = "Dominio", 
+        ylab = "Cantidad de Enlaces", 
+        col = c("green", "red"))
+
+# Usando ggplot2
+gg_dominio <- ggplot(data_enlaces, aes(x = dominio, fill = dominio)) +
+  geom_bar() +
+  scale_fill_manual(values = c("green", "red")) +
+  theme_minimal() +
+  labs(
+    title = "Enlaces Internos vs Externos",
+    x = "Dominio",
+    y = "Cantidad de Enlaces"
+  )
+
+# 3. Gráfico de tarta: Porcentaje de status de los enlaces
+status_data <- table(data_enlaces$estado)
+pie_data <- data.frame(
+  Status = names(status_data),
+  Frecuencia = as.numeric(status_data)
+)
+pie_data$Porcentaje <- pie_data$Frecuencia / sum(pie_data$Frecuencia) * 100
+
+# Usando gráficos base
+pie(pie_data$Frecuencia, 
+    labels = paste0(pie_data$Status, " (", round(pie_data$Porcentaje, 1), "%)"),
+    col = rainbow(length(pie_data$Frecuencia)),
+    main = "Porcentaje de Status de Enlaces (Gráficos Base)")
+
+# Usando ggplot2
+gg_pie <- ggplot(pie_data, aes(x = "", y = Porcentaje, fill = Status)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  theme_void() +
+  labs(
+    title = "Porcentaje de Status de Enlaces"
+  ) +
+  scale_fill_brewer(palette = "Set3")
+
+# Componer los gráficos en una sola figura (usando ggplot2)
+grid.arrange(gg_hist, gg_dominio, gg_pie, nrow = 2)
+

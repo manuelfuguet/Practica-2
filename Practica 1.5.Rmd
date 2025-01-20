@@ -37,7 +37,7 @@ data_enlaces$estado <- sapply(data_enlaces$link, function(link) {
   })
   
   # Pausa entre solicitudes para evitar ser "baneados"
-  Sys.sleep(1)
+  # Sys.sleep(1)
   
   # Retornar el código de estado
   return(estado)
