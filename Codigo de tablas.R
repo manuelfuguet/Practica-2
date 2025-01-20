@@ -153,7 +153,7 @@ gg_pie <- ggplot(pie_data, aes(x = "", y = Porcentaje, fill = Status)) +
   labs(
     title = "Porcentaje de Status de Enlaces"
   ) +
-  scale_fill_brewer(palette = "Set3")
+  scale_fill_brewer(palette = "Set1")
 
 # Componer los gráficos en una sola figura (usando ggplot2)
 grid.arrange(gg_hist, gg_dominio, gg_pie, nrow = 2)
